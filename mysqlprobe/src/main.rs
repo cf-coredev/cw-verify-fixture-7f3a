@@ -4,11 +4,16 @@ use std::io::Write;
 
 fn q(conn: &mut PooledConn, sql: &str) {
     eprintln!("=== {} ===", sql);
-    match conn.query::<Row, _>(sql) {
-        Ok(rows) => {
-            for row in rows {
-                let vals: Vec<Option<String>> = (0..row.len()).map(|i| row.get::<Option<String>, _>(i)).collect();
-                eprintln!("{:?}", vals);
+    match conn.query_iter(sql) {
+        Ok(result) => {
+            for row in result {
+                match row {
+                    Ok(row) => {
+                        let vals: Vec<Option<String>> = (0..row.len()).map(|i| row.get::<String, _>(i)).collect();
+                        eprintln!("{:?}", vals);
+                    }
+                    Err(e) => eprintln!("ROW_ERR {}", e),
+                }
             }
         }
         Err(e) => eprintln!("ERR {}", e),
