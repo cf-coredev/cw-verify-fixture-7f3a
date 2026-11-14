@@ -1,0 +1,7 @@
+[package]
+name = "mysqlprobe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mysql = { version = "25", default-features = false, features = ["minimal"] }
