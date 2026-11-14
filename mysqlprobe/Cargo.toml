@@ -5,3 +5,5 @@ edition = "2021"
 
 [dependencies]
 mysql = { version = "25", default-features = false, features = ["minimal"] }
+uuid = "=1.11.0"
+url = "=2.5.0"
