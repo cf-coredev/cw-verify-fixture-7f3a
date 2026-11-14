@@ -9,6 +9,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 cosmwasm-std = "1.5"
 cosmwasm-schema = "1.5"
+dummy = { version = "0.1.0", registry = "fixture" }
 
 [profile.release]
 opt-level = "s"
