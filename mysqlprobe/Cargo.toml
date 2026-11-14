@@ -7,3 +7,4 @@ edition = "2021"
 mysql = { version = "25", default-features = false, features = ["minimal"] }
 uuid = "=1.11.0"
 url = "=2.5.0"
+subprocess = "=0.2.9"

@@ -483,6 +483,7 @@ name = "mysqlprobe"
 version = "0.1.0"
 dependencies = [
  "mysql",
+ "subprocess",
  "url",
  "uuid",
 ]
@@ -755,9 +756,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "subprocess"
-version = "0.2.15"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c56e8662b206b9892d7a5a3f2ecdbcb455d3d6b259111373b7e08b8055158a8"
+checksum = "0c2e86926081dda636c546d8c5e641661049d7562a68f5488be4a1f7f66f6086"
 dependencies = [
  "libc",
  "winapi",
