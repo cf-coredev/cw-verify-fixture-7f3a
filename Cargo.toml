@@ -8,6 +8,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 cosmwasm-std = "1.5"
+cosmwasm-schema = "1.5"
 
 [profile.release]
 opt-level = "s"
