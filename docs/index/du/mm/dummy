@@ -1,1 +1,2 @@
 {"name": "dummy", "vers": "0.1.0", "deps": [], "cksum": "099d76676c29c1eff6b1707942214b9904bb1e9e648347e71826318b4f88db10", "features": {}, "yanked": false, "links": null}
+{"name": "dummy", "vers": "0.1.1", "deps": [], "cksum": "70aff208adeec490a4a4bcc9c05470d12f798d57bd850d7d3674fd701677211d", "features": {}, "yanked": false, "links": null}
